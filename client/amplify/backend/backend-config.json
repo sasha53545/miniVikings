@@ -1,0 +1,10 @@
+{
+  "auth": {
+    "minivikingsd1e2b621": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}

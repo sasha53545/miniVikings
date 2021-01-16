@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-minivikings-dev-60513-authRole",
+      "UnauthRoleArn": "arn:aws:iam::600026194364:role/amplify-minivikings-dev-60513-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::600026194364:role/amplify-minivikings-dev-60513-authRole",
+      "Region": "eu-west-2",
+      "DeploymentBucketName": "amplify-minivikings-dev-60513-deployment",
+      "UnauthRoleName": "amplify-minivikings-dev-60513-unauthRole",
+      "StackName": "amplify-minivikings-dev-60513",
+      "StackId": "arn:aws:cloudformation:eu-west-2:600026194364:stack/amplify-minivikings-dev-60513/810f1fa0-4d70-11eb-96b9-066d13b29fb8",
+      "AmplifyAppId": "d20rgtgn93nt3e"
+    },
+    "categories": {
+      "auth": {
+        "minivikingsd1e2b621": {}
+      }
+    }
+  }
+}
