@@ -212,7 +212,14 @@ export const authSlice = createSlice({
             state.error = action.error.message;
         },
     },
-    reducers: {},
+    reducers: {
+        updateAccessToken: (state, action) => {
+            console.log('[obabichev] action', action);
+            return {...state, accessToken: action.payload}
+        }
+    },
 });
+
+export const {updateAccessToken} = authSlice.actions;
 
 export default authSlice.reducer;

@@ -1,5 +1,6 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {createBoardAsync, deleteBoardAsync, getBoardsAsync} from "../service/board";
+import {updateTokenActionWrapper} from '../hoa/updateTokenActionWrapper';
 
 export const getBoards = createAsyncThunk(
     'api/getBoards',
@@ -11,13 +12,13 @@ export const getBoards = createAsyncThunk(
 
 export const createBoard = createAsyncThunk(
     'api/createBoard',
-    async (form: object, api) => {
-        // @ts-ignore
-        const token = api.getState().auth.accessToken;
-        const data = await createBoardAsync(form, token);
-        return data;
+    async ({data, accessToken}: any) => {
+        const response = await createBoardAsync(data, accessToken);
+        return response;
     }
 );
+
+export const createBoardWrapped = (board: any): any => updateTokenActionWrapper(createBoard, board);
 
 export const deleteBoard = createAsyncThunk(
     'api/deleteBoard',

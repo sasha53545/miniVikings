@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme: Theme) =>
             height: '100vh',
         },
         wrappContainer: {
-            height: '90vh',
+            height: '100vh',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',

@@ -16,7 +16,6 @@ import EditIcon from '@material-ui/icons/Edit';
 import {Box, IconButton} from "@material-ui/core";
 import ConfirmActionDelete from "../../ConfirmActionDelete/ConfirmActionDelete";
 import ConfirmActionEdit from "../../ConfirmActionEdit/ConfirmActionEdit";
-import {serverRequestWithUpdateToken} from "../../../hoa/serverRequestWithUpdateToken";
 
 const useStyles = makeStyles({
     '@keyframes animateHoverRow': {
@@ -100,8 +99,7 @@ export default function AcccessibleTable() {
         //     console.log('a');
         //     dispatch(updateServerTokenThunk(refreshToken));
         // }
-        serverRequestWithUpdateToken(getBoards);
-        // dispatch(getBoards());
+        dispatch(getBoards());
         dispatch(getBoardIcons());
     }, []);
 

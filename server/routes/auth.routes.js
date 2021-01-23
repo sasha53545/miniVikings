@@ -12,9 +12,7 @@ const client = jwksClient({
 function getKey(header, callback){
     console.log('header', header);
     client.getSigningKey(header.kid, function(err, key) {
-        console.log('error', err);
         const signingKey = key.publicKey || key.rsaPublicKey;
-        console.log('key', signingKey);
         callback(null, signingKey);
     });
 }
@@ -22,10 +20,8 @@ function getKey(header, callback){
 router.post('/update-token', [], async (request, response) => {
     const data = await request.body;
 
-    jwt.verify(data.awsToken, getKey, {}, function(err, decoded) {
+    jwt.verify(data.serverRefreshToken, JWT_SECRET, {}, function(err, decoded) {
         if(err) response.status(400).send(err);
-
-        console.log('decoded', decoded);
 
         const {sub, email, 'cognito:username': username} = decoded;
 
@@ -50,8 +46,6 @@ router.post('/token', [], async (request, response) => {
 
     jwt.verify(data.awsToken, getKey, {}, function(err, decoded) {
         if(err) response.status(400).send(err);
-
-        console.log('decoded', decoded);
 
         const {sub, email, 'cognito:username': username} = decoded;
 

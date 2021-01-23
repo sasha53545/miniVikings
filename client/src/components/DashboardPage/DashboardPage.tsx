@@ -5,7 +5,6 @@ import Button from '@material-ui/core/Button';
 import Container from "@material-ui/core/Container";
 import Navbar from "./Navbar/Navbar";
 import Table from "./Table/Table";
-import AddBoardPage from "../AddBoardPage/AddBoardPage";
 import {useHistory} from "react-router";
 
 const useStyles = makeStyles((theme: Theme) =>

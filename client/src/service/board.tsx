@@ -8,12 +8,12 @@ export const getBoardsAsync = async () => {
     return response.json();
 };
 
-export const createBoardAsync = async (form: object, token: object) => {
+export const createBoardAsync = async (form: object, accessToken: string) => {
     const response = await fetch('/board-create', {
         method: 'POST',
         headers: {
             'content-type': 'application/json',
-            Authorised: `Bearer ${token}`,
+            Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify(form),
     });

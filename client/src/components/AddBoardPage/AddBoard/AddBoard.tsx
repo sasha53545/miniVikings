@@ -9,8 +9,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Button from "@material-ui/core/Button";
 import {useHistory} from "react-router";
 import ListImages from "../ListImages/ListImages";
-import {createBoard} from "../../../redux/board";
-import {serverRequestWithUpdateToken} from "../../../hoa/serverRequestWithUpdateToken";
+import {createBoard, createBoardWrapped} from "../../../redux/board";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -133,6 +132,7 @@ const AddBoard: React.FC = () => {
     const dispatch = useDispatch();
     const tribes = useSelector((state: RootState) => state.dictionaries.tribes);
     const professions = useSelector((state: RootState) => state.dictionaries.professions);
+    const accessToken = useSelector((state: RootState) => state.auth.accessToken);
     const [listImages, setListImages] = useState(false);
     const [formBoard, setFormBoard] = useState<any>({
         name: '',
@@ -164,9 +164,7 @@ const AddBoard: React.FC = () => {
             event.preventDefault();
         }
 
-        dispatch(serverRequestWithUpdateToken(() => createBoard(formBoard)));
-
-        history.push('/dashboard');
+        dispatch(createBoardWrapped(formBoard));
     };
 
     const onListImages = () => {
