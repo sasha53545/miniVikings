@@ -2,20 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="89776293-86d2-4569-84da-fb242ba26adc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/hoa/updateTokenActionWrapper.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/AddBoardPage/AddBoard/AddBoard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/AddBoardPage/AddBoard/AddBoard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/AddBoardPage/AddBoardPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/AddBoardPage/AddBoardPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/DashboardPage/DashboardPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/DashboardPage/DashboardPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/DashboardPage/Table/Table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/DashboardPage/Table/Table.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/hoa/serverRequestWithUpdateToken.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/redux/auth.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/redux/auth.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/redux/board.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/redux/board.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/service/board.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/service/board.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/routes/auth.routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes/auth.routes.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/client/node_modules/" />
     <ignored path="$PROJECT_DIR$/server/node_modules/" />
@@ -310,15 +297,23 @@
       <workItem from="1608643644438" duration="3277000" />
       <workItem from="1609333347210" duration="103976000" />
       <workItem from="1610811305206" duration="18577000" />
-      <workItem from="1611231466254" duration="4176000" />
+      <workItem from="1611231466254" duration="4527000" />
     </task>
+    <task id="LOCAL-00001" summary="...">
+      <created>1611394905022</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1611394905022</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="153409000" />
+    <option name="totallyTimeSpent" value="153760000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1792" height="1033" extended-state="0" />
+    <frame x="0" y="23" width="1792" height="1033" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24957651" />
@@ -363,6 +358,10 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="..." />
+    <option name="LAST_COMMIT_MESSAGE" value="..." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
