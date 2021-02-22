@@ -23,8 +23,8 @@ router.post(
             const user = request.user;
             console.log('user', user);
             if(!user) return response.status(400).send('You are not authorised');
-            const {name, age, profession, tribe, icon} = request.body;
-            const board = new Board({name, age, profession, tribe, icon, deleted: false});
+            const {headOfTribe, tribalResident, age, profession, tribe, icon} = request.body;
+            const board = new Board({headOfTribe, tribalResident, age, profession, tribe, icon, deleted: false});
             await board.save();
 
             const boards = await Board.find({deleted: false});
@@ -40,7 +40,9 @@ router.post(
     [],
     async (request, response) => {
         try {
-
+            const user = request.user;
+            console.log('user', user);
+            if(!user) return response.status(400).send('You are not authorised');
             const _id = request.params.id;
             await Board.update(
                 {_id},

@@ -1,29 +1,43 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {boardIcons, boardProfessions, boardTribes} from "../service/dictionaries";
+import {
+    boardIconsAsync,
+    boardProfessionsAsync,
+    boardTribesAsync
+} from "../service/dictionaries";
+import {updateTokenActionWrapper} from "../hoa/updateTokenActionWrapper";
 
 export const getBoardIcons = createAsyncThunk(
     'app/getBoardIcons',
-    async () => {
-        const data = await boardIcons();
-        return data;
+    async ({data, accessToken}: any) => {
+        const response = await boardIconsAsync(accessToken);
+        return response;
     }
 );
+
+// @ts-ignore
+export const getBoardIconsWrapped = (): any => updateTokenActionWrapper(getBoardIcons);
 
 export const getBoardTribes = createAsyncThunk(
     'app/getBoardTribes',
-    async () => {
-        const data = await boardTribes();
-        return data;
+    async ({data, accessToken}: any) => {
+        const response = await boardTribesAsync(accessToken);
+        return response;
     }
 );
 
+// @ts-ignore
+export const getBoardTribesWrapped = (): any => updateTokenActionWrapper(getBoardTribes);
+
 export const getBoardProfessions = createAsyncThunk(
     'app/getBoardProfessions',
-    async () => {
-        const data = await boardProfessions();
-        return data;
+    async ({data, accessToken}: any) => {
+        const response = await boardProfessionsAsync(accessToken);
+        return response;
     }
 );
+
+// @ts-ignore
+export const getBoardProfessionsWrapped = (): any => updateTokenActionWrapper(getBoardProfessions);
 
 export const boardDictionariesSlice = createSlice({
     name: 'boardDictionaries',

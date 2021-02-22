@@ -1,5 +1,11 @@
-export const getBoardsAsync = async () => {
-    const response = await fetch('/boards');
+export const getBoardsAsync = async (accessToken: string) => {
+    const response = await fetch('/boards', {
+        method: 'GET',
+        headers: {
+            'content-type': 'application/json',
+            Authorization: `Bearer ${accessToken}`,
+        },
+    });
 
     if(response.status !== 200) {
         throw await response.json();
@@ -25,11 +31,12 @@ export const createBoardAsync = async (form: object, accessToken: string) => {
     return response.json();
 };
 
-export const deleteBoardAsync = async (id: string) => {
+export const deleteBoardAsync = async (id: string, accessToken: string) => {
     const response = await fetch(`/board-delete/${id}`, {
         method: 'POST',
         headers: {
             'content-type': 'application/json',
+            Authorization: `Bearer ${accessToken}`,
         },
     });
 

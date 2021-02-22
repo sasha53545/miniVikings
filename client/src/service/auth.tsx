@@ -9,7 +9,6 @@ interface SignUp {
     firstName: string,
     lastName: string,
     username: string,
-    confirmationCode: string,
     email: string,
     password: string,
     repeatPassword: string,
@@ -95,13 +94,12 @@ export const awsSignOutAsync = async () => {
     }
 };
 
-export const awsConfirmingSignUpAsync = async (signUp: SignUp) => {
-    const {username, confirmationCode} = signUp;
-
+export const awsConfirmingSignUpAsync = async (username: string, confirmingCode: string) => {
     try {
-        await Auth.confirmSignUp(username, confirmationCode);
+        const response = await Auth.confirmSignUp(username, confirmingCode);
+
+        return response;
     } catch (error) {
         console.log('errorConfirmingSignUp', error);
     }
 };
-

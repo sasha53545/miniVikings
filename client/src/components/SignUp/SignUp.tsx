@@ -15,7 +15,7 @@ import Container from '@material-ui/core/Container';
 import {Link as RouterLink, useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../redux";
-import {confirmingSignUpThunk, signUpThunk} from "../../redux/auth";
+import {signUpThunk} from "../../redux/auth";
 
 const Copyright = () => {
     return (
@@ -63,11 +63,7 @@ const SignUp: React.FC = () => {
         email: '',
         password: '',
         repeatPassword: '',
-        confirmationCode: '',
     });
-    const [signedUp, setSignedUp] = useState(false);
-
-    const {firstName, lastName, username, password, repeatPassword, email, confirmationCode} = signUp;
 
     const onChange = (event: any) => {
         setSignUp({
@@ -79,71 +75,8 @@ const SignUp: React.FC = () => {
     const onClickSignUp = async (event: any) => {
         event.preventDefault();
         await dispatch(signUpThunk(signUp));
-        setSignedUp(true);
+        return history.push('/confirm_registration');
     };
-
-    const onClickConfirmSignUp = async (event: any) => {
-        event.preventDefault();
-        dispatch(confirmingSignUpThunk(signUp));
-    };
-
-    if (signedUp) {
-        return (
-            <Container component="main" maxWidth="xs">
-                <CssBaseline/>
-                <div className={classes.paper}>
-                    <Avatar className={classes.avatar}>
-                        <LockOutlinedIcon/>
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Confirm registration
-                    </Typography>
-                    <form className={classes.form} noValidate onSubmit={onClickConfirmSignUp}>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    autoComplete="username"
-                                    name="username"
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="username"
-                                    label="User Name"
-                                    autoFocus
-                                    onChange={onChange}
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="confirmationCode"
-                                    label="Confirmation Code"
-                                    name="confirmationCode"
-                                    autoComplete="confirmationCode"
-                                    onChange={onChange}
-                                />
-                            </Grid>
-                        </Grid>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                            onClick={onClickConfirmSignUp}
-                        >
-                            Confirm
-                        </Button>
-                    </form>
-                </div>
-                <Box mt={5}>
-                    <Copyright/>
-                </Box>
-            </Container>
-        );
-    } else {
         return (
             <Container component="main" maxWidth="xs">
                 <CssBaseline/>
@@ -254,8 +187,6 @@ const SignUp: React.FC = () => {
                 </Box>
             </Container>
         );
-    }
-
 };
 
 export default SignUp;

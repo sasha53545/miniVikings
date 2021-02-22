@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {makeStyles, Theme, withStyles} from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -9,8 +9,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../redux";
-import {deleteBoard, getBoards} from "../../../redux/board";
-import {getBoardIcons} from "../../../redux/dictionaries";
+import {deleteBoard, deleteBoardWrapped, getBoardsWrapped} from "../../../redux/board";
+import {getBoardIconsWrapped} from "../../../redux/dictionaries";
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import {Box, IconButton} from "@material-ui/core";
@@ -76,7 +76,8 @@ const useStyles = makeStyles({
 });
 
 interface BoardOfTable {
-    name: string,
+    headOfTribe: string,
+    tribalResident: string,
     age: string,
     profession: string,
     tribe: string,
@@ -88,19 +89,12 @@ export default function AcccessibleTable() {
     const classes = useStyles();
     const dispatch = useDispatch();
     const boards = useSelector((state: RootState) => state.board.data);
-    const accessToken = useSelector((state: RootState) => state.auth.accessToken);
-    const refreshToken = useSelector((state: RootState) => state.auth.refreshToken);
-    const icons = useSelector((state: RootState) => state.dictionaries.icons);
     const [confirmDelete, setConfirmDelete] = useState({boardId: ''});
     const [confirmEdit, setConfirmEdit] = useState({boardId: ''});
 
     useEffect(() => {
-        // if(Number(accessToken) - Number(refreshToken) >= 0) {
-        //     console.log('a');
-        //     dispatch(updateServerTokenThunk(refreshToken));
-        // }
-        dispatch(getBoards());
-        dispatch(getBoardIcons());
+        dispatch(getBoardsWrapped());
+        dispatch(getBoardIconsWrapped());
     }, []);
 
     const onDeleteBoard = (id: string) => (event: any) => {
@@ -108,7 +102,7 @@ export default function AcccessibleTable() {
             event.preventDefault();
         }
 
-        dispatch(deleteBoard(id));
+        dispatch(deleteBoardWrapped(id));
     };
 
     const onEditBoard = (id: string) => (event: any) => {
@@ -133,7 +127,8 @@ export default function AcccessibleTable() {
                 <TableHead>
                     <TableRow>
                         <TableCell align="left"></TableCell>
-                        <TableCell align='left'>Имя</TableCell>
+                        <TableCell align='left'>Глава племени</TableCell>
+                        <TableCell align='left'>Житель племени</TableCell>
                         <TableCell align="left">Возраст</TableCell>
                         <TableCell align="left">Профессия</TableCell>
                         <TableCell align="left">Племя</TableCell>
@@ -149,7 +144,8 @@ export default function AcccessibleTable() {
                         }}>
                             <TableCell className={classes.boardIconWrapp} align="left"><img
                                 className={classes.boardImage} src={board.icon}/></TableCell>
-                            <TableCell align="left">{board.name}</TableCell>
+                            <TableCell align="left">{board.headOfTribe}</TableCell>
+                            <TableCell align="left">{board.tribalResident}</TableCell>
                             <TableCell align="left">{board.age}</TableCell>
                             <TableCell align="left">{board.profession}</TableCell>
                             <TableCell align="left">{board.tribe}</TableCell>

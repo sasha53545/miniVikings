@@ -1,6 +1,8 @@
 import React, {useEffect} from 'react';
 import {makeStyles, Theme, createStyles} from '@material-ui/core/styles';
-import {getBoardIcons, getBoardProfessions, getBoardTribes} from "../../redux/dictionaries";
+import {
+    getBoardIconsWrapped, getBoardProfessionsWrapped, getBoardTribesWrapped
+} from "../../redux/dictionaries";
 import {useDispatch} from "react-redux";
 import Container from "@material-ui/core/Container";
 import Navbar from "./Navbar/Navbar";
@@ -11,10 +13,10 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         wrappAddBoardPage: {
             width: '100%',
-            height: '100vh',
+            height: '90vh',
         },
         wrappContainer: {
-            height: '100vh',
+            height: '90vh',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
@@ -27,9 +29,9 @@ const AddBoardPage = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getBoardIcons());
-        dispatch(getBoardTribes());
-        dispatch(getBoardProfessions());
+        dispatch(getBoardIconsWrapped());
+        dispatch(getBoardTribesWrapped());
+        dispatch(getBoardProfessionsWrapped());
     }, []);
 
     return (

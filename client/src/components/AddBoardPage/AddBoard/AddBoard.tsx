@@ -131,11 +131,13 @@ const AddBoard: React.FC = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const tribes = useSelector((state: RootState) => state.dictionaries.tribes);
+    const username = useSelector((state: RootState) => state.auth.username);
     const professions = useSelector((state: RootState) => state.dictionaries.professions);
     const accessToken = useSelector((state: RootState) => state.auth.accessToken);
     const [listImages, setListImages] = useState(false);
     const [formBoard, setFormBoard] = useState<any>({
-        name: '',
+        headOfTribe: username,
+        tribalResident: '',
         age: '',
         icon: '',
         tribe: '',
@@ -165,6 +167,8 @@ const AddBoard: React.FC = () => {
         }
 
         dispatch(createBoardWrapped(formBoard));
+
+        return history.push('/dashboard');
     };
 
     const onListImages = () => {
@@ -186,16 +190,16 @@ const AddBoard: React.FC = () => {
                     </CardActionArea>
                     <Box className={classes.inputsContainer}>
                         <FormControlBoard variant="outlined" className={classes.formControl}>
-                            <TextField id="name" label="Name" onChange={handleFormBoard} name='name'
-                                        value={formBoard.name}
+                            <TextField id="tribalResident" label="Имя жителя" onChange={handleFormBoard} name='tribalResident'
+                                        value={formBoard.tribalResident}
                                         variant="outlined"/>
                         </FormControlBoard>
                         <FormControlBoard variant="outlined" className={classes.formControl}>
-                            <TextField id="age" label="Age" onChange={handleFormBoard} name='age' value={formBoard.age}
+                            <TextField id="age" label="Возраст жителя" onChange={handleFormBoard} name='age' value={formBoard.age}
                                         variant="outlined"/>
                         </FormControlBoard>
                         <FormControlBoard variant="outlined" className={classes.formControl}>
-                            <InputLabel id="profession">Profession</InputLabel>
+                            <InputLabel id="profession">Профессия</InputLabel>
                             <Select
                                 name='profession'
                                 labelId="profession"
@@ -213,7 +217,7 @@ const AddBoard: React.FC = () => {
                             </Select>
                         </FormControlBoard>
                         <FormControlBoard variant="outlined" className={classes.formControl}>
-                            <InputLabel id="tribe">Tribe</InputLabel>
+                            <InputLabel id="tribe">Племя</InputLabel>
                             <Select
                                 labelId="tribe"
                                 id="tribe"

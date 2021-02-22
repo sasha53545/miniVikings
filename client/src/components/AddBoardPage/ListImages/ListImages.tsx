@@ -89,7 +89,7 @@ const ListImages: React.FC<Props> = (props) => {
             <Box boxShadow={5} className={classes.wrappGrid}>
                 <Grid container spacing={1}>
                     {icons.map((icon: any) => (
-                        <Grid item xs={4} className={classes.imgBox} onClick={() => {
+                        <Grid key={icon.value} item xs={4} className={classes.imgBox} onClick={() => {
                             props.handleSelectIcon(icon.value);
                             props.onListImages();
                         }}>

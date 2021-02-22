@@ -4,11 +4,15 @@ import {updateTokenActionWrapper} from '../hoa/updateTokenActionWrapper';
 
 export const getBoards = createAsyncThunk(
     'api/getBoards',
-    async () => {
-        const data = await getBoardsAsync();
-        return data;
+    async ({data, accessToken}: any) => {
+        const response = await getBoardsAsync(accessToken);
+        console.log('[akazakav] board', response);
+        return response;
     }
 );
+
+// @ts-ignore
+export const getBoardsWrapped = (): any => updateTokenActionWrapper(getBoards);
 
 export const createBoard = createAsyncThunk(
     'api/createBoard',
@@ -22,11 +26,13 @@ export const createBoardWrapped = (board: any): any => updateTokenActionWrapper(
 
 export const deleteBoard = createAsyncThunk(
     'api/deleteBoard',
-    async (id: string) => {
-        const data = await deleteBoardAsync(id);
-        return data;
+    async ({data, accessToken}: any) => {
+        const response = await deleteBoardAsync(data, accessToken);
+        return response;
     }
 );
+
+export const deleteBoardWrapped = (id: any): any => updateTokenActionWrapper(deleteBoard, id);
 
 export const boardSlice = createSlice({
     name: 'boards',

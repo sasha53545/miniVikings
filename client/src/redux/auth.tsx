@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {Auth} from 'aws-amplify';
+import {Amplify, Auth} from 'aws-amplify';
 import {
     awsConfigAsync,
     awsConfirmingSignUpAsync,
@@ -19,7 +19,6 @@ interface SignUp {
     firstName: string,
     lastName: string,
     username: string,
-    confirmationCode: string,
     email: string,
     password: string,
     repeatPassword: string
@@ -29,20 +28,20 @@ export const awsSessionThunk = createAsyncThunk(
     'auth/awsSession',
     async () => {
         const session = await Auth.currentSession();
-        console.log('session', session);
         let awsToken = await session.getAccessToken().getJwtToken();
-        console.log('awsToken', awsToken);
+        let username = await session.getAccessToken().payload.username;
         const token = await serverTokenAsync(awsToken);
-        return token;
+        return {token, username};
     }
 );
 
 export const signInThunk = createAsyncThunk(
     'auth/signIn',
     async (signIn: SignIn) => {
-        const awsToken = await awsSignInAsync(signIn);
-        const {accessToken, refreshToken} = await serverTokenAsync(awsToken.signInUserSession.accessToken.jwtToken);
-        return {accessToken, refreshToken};
+        const response = await awsSignInAsync(signIn);
+        const {username} = response;
+        const {accessToken, refreshToken} = await serverTokenAsync(response.signInUserSession.accessToken.jwtToken);
+        return {accessToken, refreshToken, username};
     }
 );
 
@@ -50,6 +49,7 @@ export const signUpThunk = createAsyncThunk(
     'auth/signUp',
     async (signUp: SignUp) => {
         const response = await awsSignUpAsync(signUp);
+        console.log('[akazakav] signUp', response);
         return {response};
     }
 );
@@ -63,11 +63,10 @@ export const signOutThunk = createAsyncThunk(
 
 export const confirmingSignUpThunk = createAsyncThunk(
     'auth/confirmingSignUp',
-    async (signUp: SignUp) => {
-        const awsToken = await awsConfirmingSignUpAsync(signUp);
-        console.log('awsToken', awsToken);
-        // const token = await serverTokenAsync(awsToken.signInUserSession.accessToken.jwtToken);
-        // console.log('token', token);
+    async ({username, confirmingCode}: any) => {
+        const awsToken = await awsConfirmingSignUpAsync(username, confirmingCode);
+        console.log('confirming', awsToken);
+        return awsToken;
     }
 );
 
@@ -75,7 +74,8 @@ export const awsConfigThunk = createAsyncThunk(
     'auth/awsConfig',
     async () => {
         const awsConfig = await awsConfigAsync();
-        console.log('awsConfig', awsConfig);
+        console.log('[akazakav] awsConfig', awsConfig);
+        Amplify.configure(awsConfig);
         return awsConfig;
     }
 );
@@ -84,7 +84,6 @@ export const updateServerTokenThunk = createAsyncThunk(
     'auth/updateServerToken',
     async (serverRefreshToken: string) => {
         const serverToken = await updateServerTokenAsync(serverRefreshToken);
-        console.log('serverToken', serverToken);
         return serverToken;
     }
 );
@@ -92,6 +91,7 @@ export const updateServerTokenThunk = createAsyncThunk(
 export const authSlice = createSlice({
     name: 'auth',
     initialState: {
+        username: null,
         awsConfig: null,
         isAuth: false,
         loader: false,
@@ -125,15 +125,17 @@ export const authSlice = createSlice({
             state.error = '';
         },
         [awsSessionThunk.fulfilled.type]: (state, action) => {
+            state.username = action.payload.username;
+            state.accessToken = action.payload.token.accessToken;
+            state.refreshToken = action.payload.token.refreshToken;
             state.isAuth = true;
-            state.accessToken = action.payload.accessToken;
-            state.refreshToken = action.payload.refreshToken;
             state.loader = false;
+
         },
         [awsSessionThunk.rejected.type]: (state, action) => {
             state.isAuth = false;
-            state.loader = false;
             state.error = action.error.message;
+            state.loader = false;
         },
 
         //----------------SIGN_IN-----------------------
@@ -143,9 +145,10 @@ export const authSlice = createSlice({
             state.error = '';
         },
         [signInThunk.fulfilled.type]: (state, action) => {
-            state.isAuth = true;
+            state.username = action.payload.username;
             state.accessToken = action.payload.accessToken;
             state.refreshToken = action.payload.refreshToken;
+            state.isAuth = true;
             state.loader = false;
         },
         [signInThunk.rejected.type]: (state, action) => {
@@ -173,7 +176,6 @@ export const authSlice = createSlice({
             state.error = '';
         },
         [confirmingSignUpThunk.fulfilled.type]: (state, action) => {
-            state.isAuth = true;
             state.loader = false;
         },
         [confirmingSignUpThunk.rejected.type]: (state, action) => {
@@ -204,7 +206,7 @@ export const authSlice = createSlice({
             state.error = '';
         },
         [awsConfigThunk.fulfilled.type]: (state, action) => {
-            state.awsConfig = action.payload.config;
+            state.awsConfig = action.payload;
             state.loader = false;
         },
         [awsConfigThunk.rejected.type]: (state, action) => {
@@ -214,7 +216,6 @@ export const authSlice = createSlice({
     },
     reducers: {
         updateAccessToken: (state, action) => {
-            console.log('[obabichev] action', action);
             return {...state, accessToken: action.payload}
         }
     },

@@ -1,20 +1,18 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import App from "../App/App";
-import Amplify from "@aws-amplify/core";
-import {awsConfigAsync} from "../../service/auth";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../redux";
+import {awsConfigThunk} from "../../redux/auth";
 
 const Preloader: React.FC = () => {
-    const [config, setConfig] = useState();
+    const dispatch = useDispatch();
+    const awsConfig = useSelector((state: RootState) => state.auth.awsConfig);
 
     useEffect(() => {
-        awsConfigAsync()
-            .then((response) => {
-                Amplify.configure(response);
-                setConfig(response);
-            });
+        dispatch(awsConfigThunk());
     }, []);
 
-    if (!config) return null;
+    if (!awsConfig) return null;
 
     return (
         <App/>
